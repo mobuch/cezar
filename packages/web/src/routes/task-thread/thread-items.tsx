@@ -192,7 +192,7 @@ export function UserBubble({
       <div
         data-slot="user-bubble"
         data-editing="true"
-        className="max-w-[78%] self-end rounded-2xl rounded-br-md bg-muted px-[15px] py-2.5 text-ui leading-[1.55] md:max-w-[70%]"
+        className="max-w-[78%] self-end rounded-xl rounded-br-md bg-muted px-[15px] py-2.5 text-ui leading-[1.55] md:max-w-[70%]"
       >
         <textarea
           autoFocus
@@ -238,7 +238,7 @@ export function UserBubble({
   return (
     <div
       data-slot="user-bubble"
-      className="group max-w-[78%] min-w-0 self-end rounded-2xl rounded-br-md bg-muted px-[15px] py-2.5 text-ui leading-[1.55] md:max-w-[70%]"
+      className="group max-w-[78%] min-w-0 self-end rounded-xl rounded-br-md bg-muted px-[15px] py-2.5 text-ui leading-[1.55] md:max-w-[70%]"
     >
       {text.trim() !== '' || onEdit || onRemove ? (
         <span

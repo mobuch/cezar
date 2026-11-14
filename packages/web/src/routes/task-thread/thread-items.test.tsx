@@ -571,6 +571,36 @@ describe('UserBubble attachments', () => {
   })
 })
 
+/**
+ * #3 — `--radius-*: initial` in `styles/index.css` wipes Tailwind's stock scale, so the
+ * off-system `rounded-2xl` emitted no CSS and the bubble rendered with square corners.
+ */
+describe('UserBubble radius', () => {
+  const withQueries = (child: ReactNode) => (
+    <QueryClientProvider client={createQueryClient()}>{child}</QueryClientProvider>
+  )
+
+  const radiusTokens = (selector: string) =>
+    (document.querySelector(selector)?.getAttribute('class') ?? '')
+      .split(/\s+/)
+      .filter((cls) => cls.startsWith('rounded'))
+
+  it('uses on-system radius tokens in both bubble states', () => {
+    render(withQueries(<MemoryRouter><UserBubble text="rounded corners please" /></MemoryRouter>))
+    expect(radiusTokens('[data-slot="user-bubble"]')).toEqual(['rounded-xl', 'rounded-br-md'])
+  })
+
+  it('keeps the on-system tokens when the bubble is being edited', () => {
+    render(withQueries(
+      <MemoryRouter>
+        <UserBubble text="rounded corners please" onEdit={async () => {}} />
+      </MemoryRouter>,
+    ))
+    fireEvent.click(screen.getByRole('button', { name: 'Edit message' }))
+    expect(radiusTokens('[data-slot="user-bubble"][data-editing="true"]')).toEqual(['rounded-xl', 'rounded-br-md'])
+  })
+})
+
 describe('message copy controls', () => {
   const source = '# Keep Markdown\n\n```ts\nconst answer = true\n```'
 
